@@ -1,69 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>Hasil Ujian - SDI Ulumiyah Al Makruf</title>
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; }
-    .header, .footer {
-      background-color: #007e6a;
-      color: white;
-      text-align: center;
-      padding: 15px;
-    }
-    .container {
-      max-width: 850px;
-      background: white;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    .jawaban-box { margin-bottom: 15px; }
-    .benar { color: green; }
-    .salah { color: red; }
-    .rekap { margin-top: 30px; padding-top: 10px; border-top: 2px solid #007e6a; }
-    button {
-      background-color: #007e6a;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      margin-top: 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .ttd {
-      margin-top: 50px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .ttd div {
-      width: 45%;
-      text-align: center;
-    }
-    @media print {
-      button { display: none; }
-      body { background: white; }
-    }
-  </style>
 </head>
 <body>
-  <div class="header">
-    <h1>SDI ULUMIYAH AL MAKRUF</h1>
-    <p>Hasil Ujian Akhir Semester</p>
-  </div>
-
+  <div class="header"><h1>SDI ULUMIYAH AL MAKRUF</h1></div>
   <div class="container" id="hasil-container">
     <h2 id="judulHasil">Hasil Ujian</h2>
     <div id="isi-hasil">Memuat hasil ujian...</div>
     <button onclick="window.print()">Unduh PDF Hasil Ujian</button>
   </div>
-
-  <div class="footer">
-    <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online</p>
-  </div>
-
+  <div class="footer">&copy; 2025 SDI Ulumiyah Al Makruf</div>
   <script src="js/report.js"></script>
 </body>
 </html>

@@ -1,93 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>e-Ujian SDI Ulumiyah Al Makruf</title>
+  <title>Selamat Datang</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background: #f0f0f0;
-    }
-    .header, .footer {
-      background-color: #007e6a;
-      color: white;
-      text-align: center;
-      padding: 10px 20px;
-    }
-    .header h1 {
-      margin: 0;
-    }
-    .footer {
-      font-size: 0.9em;
-      margin-top: 30px;
-    }
-    .container {
-      background: white;
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      background-color: #007e6a;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      width: 100%;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
-
-  <div class="header">
-    <h1>SDI ULUMIYAH AL MAKRUF</h1>
-    <p>Portal Ujian Online Semester</p>
-  </div>
-
+  <div class="header"><h1>SDI ULUMIYAH AL MAKRUF</h1></div>
   <div class="container">
-    <h2>Login Ujian</h2>
-    <form id="loginForm">
-      <input type="text" id="nama" placeholder="Nama Siswa" required>
-      <input type="text" id="kelas" placeholder="Kelas (misal: 4A)" required>
-      <select id="mapel" required>
-        <option value="">Pilih Mata Pelajaran</option>
-        <option value="aswaja_kelas4">ASWAJA Kelas 4</option>
-        <!-- Tambahkan mapel lain di sini -->
-      </select>
-      <button type="submit">Mulai Ujian</button>
-    </form>
+    <h2>Selamat Datang di Sistem Ujian Online</h2>
+    <p><a href="quiz.html">Mulai Ujian</a></p>
   </div>
-
-  <div class="footer">
-    <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online | Dibangun dengan ❤️</p>
-  </div>
-
-  <script>
-    document.getElementById('loginForm').onsubmit = function(e) {
-      e.preventDefault();
-      const nama = document.getElementById('nama').value;
-      const kelas = document.getElementById('kelas').value;
-      const mapel = document.getElementById('mapel').value;
-      localStorage.setItem('nama', nama);
-      localStorage.setItem('kelas', kelas);
-      localStorage.setItem('mapel', mapel);
-      window.location.href = 'quiz.html';
-    };
-  </script>
-
+  <div class="footer">&copy; 2025 SDI Ulumiyah Al Makruf</div>
 </body>
 </html>
