@@ -1,21 +1,65 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>Masuk Ujian</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
   <div class="header">
     <h1>SDI ULUMIYAH AL MAKRUF</h1>
     <p>Selamat datang di sistem ujian online</p>
   </div>
+
   <div class="container">
-    <p><a href="quiz.html"><button>Mulai Ujian</button></a></p>
+    <h2>Form Identitas Siswa</h2>
+    <div class="form-group">
+      <label>Nama Siswa:</label>
+      <input type="text" id="nama">
+    </div>
+    <div class="form-group">
+      <label>Kelas:</label>
+      <input type="text" id="kelas">
+    </div>
+    <div class="form-group">
+      <label>Mata Pelajaran:</label>
+      <input type="text" id="mapel">
+    </div>
+    <button onclick="mulaiUjian()">Mulai Ujian</button>
   </div>
+
   <div class="footer">
     <p>&copy; 2025 SDI Ulumiyah Al Makruf</p>
   </div>
+
+  <script>
+    function mulaiUjian() {
+      const nama = document.getElementById('nama').value;
+      const kelas = document.getElementById('kelas').value;
+      const mapel = document.getElementById('mapel').value;
+
+      if (!nama || !kelas || !mapel) {
+        alert("Harap isi semua kolom identitas.");
+        return;
+      }
+
+      localStorage.setItem("siswa_nama", nama);
+      localStorage.setItem("siswa_kelas", kelas);
+      localStorage.setItem("siswa_mapel", mapel);
+
+      window.location.href = "quiz.html";
+    }
+  </script>
 </body>
 </html>
