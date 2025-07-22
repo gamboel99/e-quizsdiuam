@@ -1,28 +1,75 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Soal Ujian - SDI Ulumiyah Al Makruf</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    body { font-family: sans-serif; background-color: #f0f0f0; margin: 0; }
-    .header, .footer {
-      background-color: #007e6a; color: white; text-align: center; padding: 10px;
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
     }
-    .header h1 { margin: 0; }
+
+    .header,
+    .footer {
+      background-color: #007e6a;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
     .container {
-      background: white; max-width: 800px; margin: 20px auto; padding: 20px;
-      border-radius: 8px; box-shadow: 0 0 10px #ccc;
+      background: white;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
     }
-    .question { border-bottom: 1px solid #ddd; margin-bottom: 15px; padding-bottom: 10px; }
-    .question p { margin: 5px 0; font-weight: bold; }
-    label { display: block; padding-left: 15px; margin-bottom: 5px; }
-    input[type="text"] {
-      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;
+
+    .soal-box {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
     }
+
+    .soal-box p {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      padding-left: 15px;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
     button {
-      background-color: #007e6a; color: white; padding: 10px; border: none;
-      width: 100%; border-radius: 5px; font-weight: bold;
+      background-color: #007e6a;
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f50;
     }
   </style>
 </head>
@@ -32,16 +79,15 @@
     <p>Ujian Akhir Semester - Soal Online</p>
   </div>
 
-  <div class="container" id="quizContainer">
-    <h2 id="judulUjian"></h2>
-    <form id="quizForm"></form>
-    <button onclick="submitQuiz()">Selesai</button>
+  <div class="container">
+    <div id="info-mapel"></div>
+    <div id="quiz-container">Memuat soal...</div>
   </div>
 
   <div class="footer">
     <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online</p>
   </div>
 
-  <script src="js/main.js"></script>
+  <script src="js/quiz.js"></script>
 </body>
 </html>
