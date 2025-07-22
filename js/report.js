@@ -1,121 +1,82 @@
 window.onload = function () {
   const soal = JSON.parse(localStorage.getItem("soal"));
   const jawaban = JSON.parse(localStorage.getItem("jawaban"));
+
+  // Identitas siswa
+  const nama = localStorage.getItem("siswa_nama") || "-";
+  const kelas = localStorage.getItem("siswa_kelas") || "-";
+  const mapel = localStorage.getItem("siswa_mapel") || "-";
+
+  document.getElementById("namaSiswa").textContent = nama;
+  document.getElementById("kelasSiswa").textContent = kelas;
+  document.getElementById("mapelSiswa").textContent = mapel;
+
   const container = document.getElementById("hasilUjian");
-  
+
   if (!soal || !jawaban) {
-    container.innerHTML = "<p>Data belum lengkap untuk menampilkan hasil ujian.</p>";
+    container.innerHTML += "<p>Data belum lengkap untuk menampilkan hasil ujian.</p>";
     return;
   }
 
   let totalBenar = 0;
-  let totalPG = soal.pg.length;
-
-  const wrap = document.createElement("div");
-  wrap.className = "container";
-
-  // Judul
-  wrap.innerHTML += `<h2>Hasil Ujian - ${soal.mapel} Kelas ${soal.kelas}</h2><hr>`;
-
-  // Soal PG
-  wrap.innerHTML += `<h3>Jawaban Pilihan Ganda</h3>`;
-  soal.pg.forEach((item, index) => {
-    const jwb = jawaban.pg[index] || "(kosong)";
+  let html = `<h2>Jawaban Pilihan Ganda</h2><table class="rekap"><tr><th>No</th><th>Soal</th><th>Jawaban Siswa</th><th>Jawaban Benar</th></tr>`;
+  soal.pg.forEach((item, i) => {
+    const jwb = jawaban.pg?.[i] || "";
     const benar = item.jawaban;
     const isBenar = jwb === benar;
     if (isBenar) totalBenar++;
-
-    wrap.innerHTML += `
-      <div class="rekap">
-        <p><strong>${index + 1}. ${item.soal}</strong></p>
-        <p>Jawaban Anda: <span style="color:${isBenar ? 'green' : 'red'}">${jwb}</span></p>
-        ${
-          !isBenar
-            ? `<p>Jawaban Benar: <span style="color:green">${benar}</span></p>`
-            : ""
-        }
-        <hr>
-      </div>`;
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td>${item.soal}</td>
+      <td class="${isBenar ? 'benar' : 'salah'}">${jwb || '-'}</td>
+      <td class="benar">${benar}</td>
+    </tr>`;
   });
+  html += `</table>`;
 
-  // Soal Isian
-  wrap.innerHTML += `<h3>Jawaban Isian Singkat</h3>`;
-  soal.isian.forEach((item, index) => {
-    const jwb = jawaban.isian[index] || "(kosong)";
-    wrap.innerHTML += `
-      <div class="rekap">
-        <p><strong>${index + 1 + totalPG}. ${item.soal}</strong></p>
-        <p>Jawaban Anda: <span>${jwb}</span></p>
-        <p>Kunci Jawaban: <span>${item.jawaban}</span></p>
-        <hr>
-      </div>`;
+  html += `<h2>Jawaban Isian</h2><table class="rekap"><tr><th>No</th><th>Soal</th><th>Jawaban Siswa</th><th>Jawaban Benar</th></tr>`;
+  soal.isian.forEach((item, i) => {
+    const jwb = jawaban.isian?.[i] || "";
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td>${item.soal}</td>
+      <td>${jwb || '-'}</td>
+      <td class="benar">${item.jawaban}</td>
+    </tr>`;
   });
+  html += `</table>`;
 
-  // Soal Uraian
-  wrap.innerHTML += `<h3>Jawaban Uraian</h3>`;
-  soal.uraian.forEach((item, index) => {
-    const jwb = jawaban.uraian[index] || "(kosong)";
-    wrap.innerHTML += `
-      <div class="rekap">
-        <p><strong>${index + 1 + totalPG + soal.isian.length}. ${item.soal}</strong></p>
-        <p>Jawaban Anda:</p>
-        <div style="background:#f9f9f9;padding:10px;border-radius:5px;">${jwb}</div>
-        <p>Kunci Jawaban: <span>${item.jawaban}</span></p>
-        <hr>
-      </div>`;
+  html += `<h2>Jawaban Uraian</h2><table class="rekap"><tr><th>No</th><th>Soal</th><th>Jawaban Siswa</th><th>Jawaban Ideal</th></tr>`;
+  soal.uraian.forEach((item, i) => {
+    const jwb = jawaban.uraian?.[i] || "";
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td>${item.soal}</td>
+      <td>${jwb || '-'}</td>
+      <td class="benar">${item.jawaban}</td>
+    </tr>`;
   });
+  html += `</table>`;
 
-  // Skor & Kesimpulan
-  const skor = Math.round((totalBenar / totalPG) * 100);
-  let predikat = "";
-  let status = "";
+  // Skor dan predikat
+  const skor = Math.round((totalBenar / soal.pg.length) * 100);
+  const predikat =
+    skor >= 90 ? "A (Sangat Baik)" :
+    skor >= 75 ? "B (Baik)" :
+    skor >= 60 ? "C (Cukup)" :
+    "D (Perlu Bimbingan)";
+  const status = skor >= 75 ? "Lulus" : "Remidi";
 
-  if (skor >= 90) {
-    predikat = "A (Istimewa)";
-    status = "Lulus";
-  } else if (skor >= 75) {
-    predikat = "B (Baik)";
-    status = "Lulus";
-  } else if (skor >= 60) {
-    predikat = "C (Cukup)";
-    status = "Remidi";
-  } else {
-    predikat = "D (Kurang)";
-    status = "Remidi";
-  }
-
-  wrap.innerHTML += `
-    <h3>Rekap Nilai</h3>
-    <table style="width:100%;border-collapse:collapse">
-      <tr><td>Jumlah Soal PG</td><td>: ${totalPG}</td></tr>
-      <tr><td>Jawaban Benar</td><td>: ${totalBenar}</td></tr>
-      <tr><td>Skor</td><td>: ${skor}</td></tr>
-      <tr><td>Predikat</td><td>: ${predikat}</td></tr>
-      <tr><td>Status</td><td>: <strong>${status}</strong></td></tr>
-    </table><br>
-  `;
-
-  // Tanda tangan
-  const today = new Date().toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  wrap.innerHTML += `
-    <div style="display:flex;justify-content:space-between;margin-top:40px;">
-      <div style="text-align:center;">
-        <p>Wali Murid</p><br><br>
-        <p>(........................)</p>
-      </div>
-      <div style="text-align:center;">
-        <p>Kediri, ${today}<br>Guru Pengampu</p><br><br>
-        <p><strong>(........................)</strong></p>
-      </div>
+  html += `
+    <h2>Rekap Nilai</h2>
+    <p><strong>Skor:</strong> ${skor}</p>
+    <p><strong>Predikat:</strong> ${predikat}</p>
+    <p><strong>Status:</strong> ${status}</p>
+    <div class="ttd">
+      <div><p>Guru Pengampu</p><br><br><br><p>__________________</p></div>
+      <div><p>Wali Murid</p><br><br><br><p>__________________</p></div>
     </div>
-    <br><br>
-    <center><button onclick="window.print()">🖨️ Cetak / Simpan PDF</button></center>
   `;
 
-  container.appendChild(wrap);
+  container.innerHTML += html;
 };
