@@ -8,8 +8,15 @@ function renderHasil() {
   const nama = localStorage.getItem("nama") || "Siswa";
   const kelas = localStorage.getItem("kelas") || "4";
   const mapel = localStorage.getItem("mapel") || "ASWAJA Kelas 4";
-  const jawaban = JSON.parse(localStorage.getItem("jawaban") || "[]");
-  const kunci = JSON.parse(localStorage.getItem("kunci") || "[]");
+  let jawaban = [];
+  let kunci = [];
+
+  try {
+    jawaban = JSON.parse(localStorage.getItem("jawaban") || "[]");
+    kunci = JSON.parse(localStorage.getItem("kunci") || "[]");
+  } catch (e) {
+    console.error("Gagal memuat data jawaban atau kunci:", e);
+  }
 
   let benar = 0;
   let output = `
@@ -20,19 +27,21 @@ function renderHasil() {
     <ol>
   `;
 
-  jawaban.forEach((j, i) => {
-    const betul = j === kunci[i];
+  for (let i = 0; i < kunci.length; i++) {
+    const j = jawaban[i] || '-';
+    const k = kunci[i] || '-';
+    const betul = j === k;
     if (betul) benar++;
     output += `
       <li>
-        Jawaban Anda: <strong>${j || '-'}</strong> ${betul ? "✅" : `❌<br><em>Jawaban Benar: <strong>${kunci[i]}</strong></em>`}
+        Jawaban Anda: <strong>${j}</strong> ${betul ? "✅" : `❌<br><em>Jawaban Benar: <strong>${k}</strong></em>`}
       </li>
     `;
-  });
+  }
 
   output += "</ol>";
 
-  const skor = Math.round((benar / kunci.length) * 100);
+  const skor = kunci.length > 0 ? Math.round((benar / kunci.length) * 100) : 0;
   let predikat = "D", status = "Remidi";
   if (skor >= 85) predikat = "A", status = "Lulus";
   else if (skor >= 70) predikat = "B", status = "Lulus";
