@@ -5,32 +5,19 @@
   <title>Hasil Ujian - SDI Ulumiyah Al Makruf</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    body { font-family: sans-serif; background-color: #f0f0f0; margin: 0; }
     .header, .footer {
-      text-align: center;
-      padding: 10px;
+      background-color: #007e6a; color: white; text-align: center; padding: 10px;
     }
-    .header h1 {
-      margin: 5px 0;
+    .container {
+      background: white; max-width: 800px; margin: 20px auto; padding: 20px;
+      border-radius: 8px; box-shadow: 0 0 10px #ccc;
     }
-    .footer {
-      font-size: 0.9em;
-      margin-top: 30px;
-    }
-    .rekap {
-      margin-top: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-    }
-    .signatures {
-      margin-top: 50px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9em;
-    }
-    .signatures div {
-      width: 30%;
-      text-align: center;
+    .signatures { display: flex; justify-content: space-between; margin-top: 40px; }
+    .signatures div { text-align: center; width: 45%; }
+    button {
+      background-color: #007e6a; color: white; padding: 10px 20px;
+      border: none; border-radius: 5px; width: 100%; margin-top: 20px;
     }
   </style>
 </head>
@@ -38,31 +25,31 @@
   <div class="header">
     <h1>SDI ULUMIYAH AL MAKRUF</h1>
     <p>Hasil Ujian Akhir Semester</p>
-    <p><strong>Mata Pelajaran:</strong> <span id="mapel"></span></p>
   </div>
 
   <div class="container" id="hasil">
-    <!-- Rekapan hasil akan diisi oleh JS -->
+    <!-- Diisi otomatis oleh report.js -->
   </div>
 
-  <div class="signatures container">
+  <div class="container signatures">
     <div>
       <p>Guru Pengampu</p><br><br><br>
-      <p><strong>____________________</strong><br>(Nama Guru)</p>
+      <p>____________________<br>(Nama Guru)</p>
     </div>
     <div>
       <p>Orang Tua/Wali</p><br><br><br>
-      <p><strong>____________________</strong><br>(Tanda Tangan)</p>
+      <p>____________________<br>(Tanda Tangan)</p>
     </div>
   </div>
 
-  <div class="footer">
-    <p>Dicetak otomatis oleh sistem e-Ujian | SDI Ulumiyah Al Makruf</p>
+  <div class="container">
+    <button onclick="cetakPDF()">📄 Unduh Hasil Ujian (PDF)</button>
+    <br><br>
+    <a href="index.html">🔙 Kembali ke Halaman Awal</a>
   </div>
 
-  <div style="text-align:center; margin-bottom: 20px;">
-    <button onclick="cetakPDF()">📄 Unduh Hasil Ujian (PDF)</button><br><br>
-    <a href="index.html">🔙 Kembali ke Halaman Awal</a>
+  <div class="footer">
+    <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online</p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
