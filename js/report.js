@@ -1,3 +1,8 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHasil();
+});
+
 function renderHasil() {
   const hasilContainer = document.getElementById("hasil");
   const nama = localStorage.getItem("nama") || "Siswa";
@@ -44,32 +49,16 @@ function renderHasil() {
   hasilContainer.innerHTML = output;
 }
 
-// CETAK PDF - Delay render DOM dan pastikan konten visible
 function cetakPDF() {
   const hasil = document.getElementById("hasil");
-
-  // Scroll dulu agar render selesai
   window.scrollTo(0, 0);
-
   setTimeout(() => {
     html2pdf().set({
-      margin: 5,
+      margin: 10,
       filename: 'hasil-ujian.pdf',
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0,
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-      }
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     }).from(hasil).save();
-  }, 800); // delay minimal 800ms agar isi ter-render penuh
+  }, 800);
 }
-
-// Jalankan saat halaman selesai dimuat
-window.onload = () => {
-  renderHasil();
-};
