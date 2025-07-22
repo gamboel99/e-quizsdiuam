@@ -1,4 +1,3 @@
-
 function tampilkanHasil() {
   const nama = localStorage.getItem('nama');
   const kelas = localStorage.getItem('kelas');
@@ -19,9 +18,9 @@ function tampilkanHasil() {
     const user = userJawabanPG[i] || "-";
     const isBenar = user === jawaban;
     if (isBenar) benar++;
-    html += \`<p>${i+1}. Jawaban Anda: <b style="color:\${isBenar ? 'green' : 'red'}">\${user}</b>\`;
+    html += `<p>${i + 1}. Jawaban Anda: <b style="color:${isBenar ? 'green' : 'red'}">${user}</b>`;
     if (!isBenar) {
-      html += \` | Jawaban Benar: <b style="color:green">\${jawaban}</b>\`;
+      html += ` | Jawaban Benar: <b style="color:green">${jawaban}</b>`;
     }
     html += "</p>";
   });
@@ -31,9 +30,9 @@ function tampilkanHasil() {
     const user = userJawabanIsian[i] || "-";
     const isBenar = user.toLowerCase().trim() === jawaban.toLowerCase().trim();
     if (isBenar) benar++;
-    html += \`<p>${i+1}. Jawaban Anda: <b style="color:\${isBenar ? 'green' : 'red'}">\${user}</b>\`;
+    html += `<p>${i + 1}. Jawaban Anda: <b style="color:${isBenar ? 'green' : 'red'}">${user}</b>`;
     if (!isBenar) {
-      html += \` | Jawaban Benar: <b style="color:green">\${jawaban}</b>\`;
+      html += ` | Jawaban Benar: <b style="color:green">${jawaban}</b>`;
     }
     html += "</p>";
   });
@@ -45,9 +44,9 @@ function tampilkanHasil() {
   else if (skor >= 61) { predikat = "C"; lulus = "Lulus"; }
 
   html += "<hr>";
-  html += \`<h3>Nilai Akhir: \${skor}</h3>\`;
-  html += \`<p>Predikat: <strong>\${predikat}</strong></p>\`;
-  html += \`<p>Kesimpulan: <strong>\${lulus}</strong></p>\`;
+  html += `<h3>Nilai Akhir: ${skor}</h3>`;
+  html += `<p>Predikat: <strong>${predikat}</strong></p>`;
+  html += `<p>Kesimpulan: <strong>${lulus}</strong></p>`;
 
   document.getElementById('hasil').innerHTML = html;
 }
@@ -55,11 +54,11 @@ function tampilkanHasil() {
 function cetakPDF() {
   const element = document.getElementById('hasil');
   const opt = {
-    margin:       0.5,
-    filename:     'hasil_ujian.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    margin: 0.5,
+    filename: 'hasil_ujian.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
   };
   html2pdf().from(element).set(opt).save();
 }
