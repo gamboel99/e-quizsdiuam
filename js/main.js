@@ -1,4 +1,3 @@
-
 const nama = localStorage.getItem('nama');
 const kelas = localStorage.getItem('kelas');
 const mapel = localStorage.getItem('mapel');
@@ -30,21 +29,21 @@ fetch(`soal/${mapel}.json`)
 function submitQuiz() {
   const jawabanPG = JSON.parse(localStorage.getItem('jawabanBenarPG'));
   const jawabanIsian = JSON.parse(localStorage.getItem('jawabanBenarIsian'));
-  let benar = 0;
-  jawabanPG.forEach((jawaban, i) => {
+  let userJawabanPG = [];
+  let userJawabanIsian = [];
+
+  jawabanPG.forEach((_, i) => {
     const val = document.querySelector(`input[name='pg${i}']:checked`);
-    if (val && val.value === jawaban) benar++;
+    userJawabanPG.push(val ? val.value : "-");
   });
-  jawabanIsian.forEach((jawaban, i) => {
+
+  jawabanIsian.forEach((_, i) => {
     const val = document.querySelector(`input[name='isian${i}']`);
-    if (val && val.value.toLowerCase().trim() === jawaban) benar++;
+    userJawabanIsian.push(val ? val.value : "-");
   });
-  const total = jawabanPG.length + jawabanIsian.length;
-  const skor = Math.round((benar / total) * 100);
-  let predikat = 'D', lulus = 'Tidak Lulus';
-  if (skor >= 86) { predikat = 'A'; lulus = 'Lulus'; }
-  else if (skor >= 76) { predikat = 'B'; lulus = 'Lulus'; }
-  else if (skor >= 61) { predikat = 'C'; lulus = 'Lulus'; }
-  alert(`Nilai Anda: ${skor}\nPredikat: ${predikat}\n${lulus}`);
-  window.location.href = "index.html";
+
+  localStorage.setItem('jawabanUserPG', JSON.stringify(userJawabanPG));
+  localStorage.setItem('jawabanUserIsian', JSON.stringify(userJawabanIsian));
+
+  window.location.href = "result.html";
 }
