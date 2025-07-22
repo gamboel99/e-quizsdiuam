@@ -1,0 +1,37 @@
+{
+  "mapel": "ASWAJA",
+  "kelas": "4",
+  "waktu": 90,
+  "pg": [
+    {
+      "soal": "Apakah arti dari singkatan PBNU?",
+      "pilihan": [
+        "Pengurus Inti NU",
+        "Pengurus Harian NU",
+        "Pengurus Bumi NU",
+        "Pengurus Besar NU"
+      ],
+      "jawaban": "Pengurus Besar NU"
+    },
+    {
+      "soal": "Pengurus NU yang bertempat di Ibu Kota adalah?",
+      "pilihan": [
+        "PBNU",
+        "PCNU",
+        "PWNU",
+        "PCI NU"
+      ],
+      "jawaban": "PBNU"
+    }
+  ],
+  "isian": [
+    {
+      "soal": "Pagar Nusa adalah?",
+      "jawaban": "Pencak silatnya NU"
+    },
+    {
+      "soal": "Arti dari PCI NU adalah?",
+      "jawaban": "Pengurus Cabang Istimewa NU"
+    }
+  ]
+}

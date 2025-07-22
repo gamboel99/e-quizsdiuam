@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Ujian</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Ujian Online SDI Ulumiyah Al Makruf</h1>
+    <form id="loginForm">
+      <input type="text" id="nama" placeholder="Nama Siswa" required><br>
+      <input type="text" id="kelas" placeholder="Kelas" required><br>
+      <select id="mapel" required>
+        <option value="">Pilih Mata Pelajaran</option>
+        <option value="aswaja_kelas4">ASWAJA Kelas 4</option>
+      </select><br>
+      <button type="submit">Mulai Ujian</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').onsubmit = function(e) {
+      e.preventDefault();
+      const nama = document.getElementById('nama').value;
+      const kelas = document.getElementById('kelas').value;
+      const mapel = document.getElementById('mapel').value;
+      localStorage.setItem('nama', nama);
+      localStorage.setItem('kelas', kelas);
+      localStorage.setItem('mapel', mapel);
+      window.location.href = 'quiz.html';
+    };
+  </script>
+</body>
+</html>
