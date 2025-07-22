@@ -3,21 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Hasil Ujian - SDI Ulumiyah Al Makruf</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    body { font-family: sans-serif; background-color: #f0f0f0; margin: 0; }
+    body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; }
     .header, .footer {
-      background-color: #007e6a; color: white; text-align: center; padding: 10px;
+      background-color: #007e6a;
+      color: white;
+      text-align: center;
+      padding: 15px;
     }
     .container {
-      background: white; max-width: 800px; margin: 20px auto; padding: 20px;
-      border-radius: 8px; box-shadow: 0 0 10px #ccc;
+      max-width: 850px;
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
     }
-    .signatures { display: flex; justify-content: space-between; margin-top: 40px; }
-    .signatures div { text-align: center; width: 45%; }
+    .jawaban-box { margin-bottom: 15px; }
+    .benar { color: green; }
+    .salah { color: red; }
+    .rekap { margin-top: 30px; padding-top: 10px; border-top: 2px solid #007e6a; }
     button {
-      background-color: #007e6a; color: white; padding: 10px 20px;
-      border: none; border-radius: 5px; width: 100%; margin-top: 20px;
+      background-color: #007e6a;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .ttd {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ttd div {
+      width: 45%;
+      text-align: center;
+    }
+    @media print {
+      button { display: none; }
+      body { background: white; }
     }
   </style>
 </head>
@@ -27,32 +54,16 @@
     <p>Hasil Ujian Akhir Semester</p>
   </div>
 
-  <div class="container" id="hasil">
-    <!-- Diisi otomatis oleh report.js -->
-  </div>
-
-  <div class="container signatures">
-    <div>
-      <p>Guru Pengampu</p><br><br><br>
-      <p>____________________<br>(Nama Guru)</p>
-    </div>
-    <div>
-      <p>Orang Tua/Wali</p><br><br><br>
-      <p>____________________<br>(Tanda Tangan)</p>
-    </div>
-  </div>
-  
-  <div class="container">
-    <button onclick="cetakPDF()">📄 Unduh Hasil Ujian (PDF)</button>
-    <br><br>
-    <a href="index.html">🔙 Kembali ke Halaman Awal</a>
+  <div class="container" id="hasil-container">
+    <h2 id="judulHasil">Hasil Ujian</h2>
+    <div id="isi-hasil">Memuat hasil ujian...</div>
+    <button onclick="window.print()">Unduh PDF Hasil Ujian</button>
   </div>
 
   <div class="footer">
     <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online</p>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="js/report.js"></script>
 </body>
 </html>
