@@ -1,81 +1,51 @@
-async function loadSoal() {
-  try {
-    const res = await fetch("../soal.json"); // atau "soal.js" jika ekstensi .js
-    const data = await res.json();
 
-    document.getElementById("judulUjian").innerText =
-      `Ujian Mata Pelajaran: ${data.mapel} - Kelas ${data.kelas}`;
+const form = document.getElementById("quizForm");
+const judul = document.getElementById("judulUjian");
 
-    const form = document.getElementById("quizForm");
+judul.innerText = `Mata Pelajaran: ${soal.mapel} | Kelas ${soal.kelas}`;
+localStorage.setItem("soal", JSON.stringify(soal));
 
-    // Soal PG
-    data.pg.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `<p>${index + 1}. ${item.soal}</p>`;
-      item.pilihan.forEach((pilihan, i) => {
-        div.innerHTML += `
-          <label>
-            <input type="radio" name="pg${index}" value="${pilihan}"> ${pilihan}
-          </label>`;
-      });
-      form.appendChild(div);
-    });
+const jawaban = { pg: [], isian: [], uraian: [] };
 
-    // Soal Isian
-    data.isian.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `
-        <p>${index + 1 + data.pg.length}. ${item.soal}</p>
-        <input type="text" name="isian${index}" />
-      `;
-      form.appendChild(div);
-    });
+soal.pg.forEach((item, index) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  div.innerHTML = `<p>${index + 1}. ${item.soal}</p>`;
+  item.pilihan.forEach(pil => {
+    div.innerHTML += `<label><input type="radio" name="pg-${index}" value="${pil}"> ${pil}</label>`;
+  });
+  form.appendChild(div);
+});
 
-    // Soal Uraian
-    data.uraian.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `
-        <p>${index + 1 + data.pg.length + data.isian.length}. ${item.soal}</p>
-        <textarea name="uraian${index}" rows="4" style="width:100%;padding:5px;"></textarea>
-      `;
-      form.appendChild(div);
-    });
+soal.isian.forEach((item, index) => {
+  const nomor = index + soal.pg.length + 1;
+  const div = document.createElement("div");
+  div.className = "question";
+  div.innerHTML = `<p>${nomor}. ${item.soal}</p><input type="text" name="isian-${index}">`;
+  form.appendChild(div);
+});
 
-    // Simpan kunci ke localStorage
-    localStorage.setItem("soal", JSON.stringify(data));
-  } catch (error) {
-    alert("Gagal memuat soal: " + error);
-  }
-}
+soal.uraian.forEach((item, index) => {
+  const nomor = index + soal.pg.length + soal.isian.length + 1;
+  const div = document.createElement("div");
+  div.className = "question";
+  div.innerHTML = `<p>${nomor}. ${item.soal}</p><textarea name="uraian-${index}" rows="3" style="width:100%"></textarea>`;
+  form.appendChild(div);
+});
 
 function submitQuiz() {
-  const soal = JSON.parse(localStorage.getItem("soal"));
-  const jawaban = {
-    pg: [],
-    isian: [],
-    uraian: [],
-  };
-
-  soal.pg.forEach((_, i) => {
-    const selected = document.querySelector(`input[name="pg${i}"]:checked`);
-    jawaban.pg.push(selected ? selected.value : "");
+  soal.pg.forEach((item, index) => {
+    const el = document.querySelector(`input[name="pg-${index}"]:checked`);
+    jawaban.pg.push(el ? el.value : "");
   });
-
-  soal.isian.forEach((_, i) => {
-    const input = document.querySelector(`input[name="isian${i}"]`);
-    jawaban.isian.push(input ? input.value.trim() : "");
+  soal.isian.forEach((item, index) => {
+    const el = document.querySelector(`input[name="isian-${index}"]`);
+    jawaban.isian.push(el ? el.value.trim() : "");
   });
-
-  soal.uraian.forEach((_, i) => {
-    const input = document.querySelector(`textarea[name="uraian${i}"]`);
-    jawaban.uraian.push(input ? input.value.trim() : "");
+  soal.uraian.forEach((item, index) => {
+    const el = document.querySelector(`textarea[name="uraian-${index}"]`);
+    jawaban.uraian.push(el ? el.value.trim() : "");
   });
-
   localStorage.setItem("jawaban", JSON.stringify(jawaban));
   window.location.href = "result.html";
 }
-
-window.onload = loadSoal;

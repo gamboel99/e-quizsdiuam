@@ -5,15 +5,23 @@
   <meta charset="UTF-8">
   <title>Soal Ujian - SDI Ulumiyah Al Makruf</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/soal.js"></script>
+  <script defer src="js/quiz.js"></script>
 </head>
 <body>
-  <div class="header"><h1>SDI ULUMIYAH AL MAKRUF</h1></div>
+  <div class="header">
+    <h1>SDI ULUMIYAH AL MAKRUF</h1>
+    <p>Ujian Akhir Semester - Soal Online</p>
+  </div>
+
   <div class="container" id="quizContainer">
     <h2 id="judulUjian"></h2>
     <form id="quizForm"></form>
-    <button onclick="submitQuiz()">Selesai</button>
+    <button type="button" onclick="submitQuiz()">Selesai</button>
   </div>
-  <div class="footer">&copy; 2025 SDI Ulumiyah Al Makruf</div>
-  <script src="js/quiz.js"></script>
+
+  <div class="footer">
+    <p>&copy; 2025 SDI Ulumiyah Al Makruf - Sistem Ujian Online</p>
+  </div>
 </body>
 </html>
