@@ -2,15 +2,69 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Hasil Ujian</title>
+  <title>Hasil Ujian - SDI Ulumiyah Al Makruf</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .header, .footer {
+      text-align: center;
+      padding: 10px;
+    }
+    .header h1 {
+      margin: 5px 0;
+    }
+    .footer {
+      font-size: 0.9em;
+      margin-top: 30px;
+    }
+    .rekap {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+    }
+    .signatures {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+    }
+    .signatures div {
+      width: 30%;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <div class="container" id="hasil"></div>
-  <div class="container" style="text-align:center">
+  <div class="header">
+    <h1>SDI ULUMIYAH AL MAKRUF</h1>
+    <p>Hasil Ujian Akhir Semester</p>
+    <p><strong>Mata Pelajaran:</strong> <span id="mapel"></span></p>
+  </div>
+
+  <div class="container" id="hasil">
+    <!-- Rekapan hasil akan diisi oleh JS -->
+  </div>
+
+  <div class="signatures container">
+    <div>
+      <p>Guru Pengampu</p><br><br><br>
+      <p><strong>____________________</strong><br>(Nama Guru)</p>
+    </div>
+    <div>
+      <p>Orang Tua/Wali</p><br><br><br>
+      <p><strong>____________________</strong><br>(Tanda Tangan)</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Dicetak otomatis oleh sistem e-Ujian | SDI Ulumiyah Al Makruf</p>
+  </div>
+
+  <div style="text-align:center; margin-bottom: 20px;">
     <button onclick="cetakPDF()">📄 Unduh Hasil Ujian (PDF)</button><br><br>
     <a href="index.html">🔙 Kembali ke Halaman Awal</a>
   </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="js/report.js"></script>
 </body>
