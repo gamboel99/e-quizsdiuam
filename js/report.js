@@ -2,6 +2,16 @@ window.onload = function () {
   const soal = JSON.parse(localStorage.getItem("soal"));
   const jawaban = JSON.parse(localStorage.getItem("jawaban"));
   const container = document.getElementById("hasilUjian");
+  const nama = localStorage.getItem("siswa_nama") || "-";
+  const kelas = localStorage.getItem("siswa_kelas") || "-";
+  const mapel = localStorage.getItem("siswa_mapel") || "-";
+  document.getElementById("namaSiswa").textContent = nama;
+  document.getElementById("kelasSiswa").textContent = kelas;
+  document.getElementById("mapelSiswa").textContent = mapel;
+
+  // ... lanjutkan dengan bagian yang memproses soal dan jawaban
+}
+
 
   if (!soal || !jawaban) {
     container.innerHTML = "<p>Data belum lengkap untuk menampilkan hasil ujian.</p>";
