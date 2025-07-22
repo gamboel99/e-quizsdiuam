@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  renderHasil();
-});
-
 function renderHasil() {
   const hasilContainer = document.getElementById("hasil");
   const nama = localStorage.getItem("nama") || "Siswa";
@@ -12,7 +8,7 @@ function renderHasil() {
 
   let benar = 0;
   let output = `
-    <h2>Rekapan Hasil Ujian</h2>
+    <h2 style="text-align:center;">Rekapan Hasil Ujian</h2>
     <p><strong>Nama:</strong> ${nama}<br>
     <strong>Kelas:</strong> ${kelas}<br>
     <strong>Mata Pelajaran:</strong> ${mapel}</p>
@@ -24,7 +20,7 @@ function renderHasil() {
     if (betul) benar++;
     output += `
       <li>
-        Jawaban Anda: <strong>${j || '-'}</strong> ${betul ? "✅" : `❌<br>Jawaban Benar: <strong>${kunci[i]}</strong>`}
+        Jawaban Anda: <strong>${j || '-'}</strong> ${betul ? "✅" : `❌<br><em>Jawaban Benar: <strong>${kunci[i]}</strong></em>`}
       </li>
     `;
   });
@@ -38,7 +34,7 @@ function renderHasil() {
   else if (skor >= 60) predikat = "C";
 
   output += `
-    <div class="rekap">
+    <div class="rekap" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f8f8f8;">
       <p><strong>Skor:</strong> ${skor}</p>
       <p><strong>Predikat:</strong> ${predikat}</p>
       <p><strong>Status:</strong> ${status}</p>
@@ -48,15 +44,32 @@ function renderHasil() {
   hasilContainer.innerHTML = output;
 }
 
+// CETAK PDF - Delay render DOM dan pastikan konten visible
 function cetakPDF() {
   const hasil = document.getElementById("hasil");
+
+  // Scroll dulu agar render selesai
+  window.scrollTo(0, 0);
+
   setTimeout(() => {
     html2pdf().set({
-      margin: 10,
+      margin: 5,
       filename: 'hasil-ujian.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0,
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      }
     }).from(hasil).save();
-  }, 500); // jeda agar isi benar-benar render sebelum cetak
+  }, 800); // delay minimal 800ms agar isi ter-render penuh
 }
+
+// Jalankan saat halaman selesai dimuat
+window.onload = () => {
+  renderHasil();
+};
