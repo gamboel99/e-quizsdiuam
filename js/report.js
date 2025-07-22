@@ -1,66 +1,62 @@
-function tampilkanHasil() {
-  const nama = localStorage.getItem('nama');
-  const kelas = localStorage.getItem('kelas');
-  const mapel = localStorage.getItem('mapel');
-  const jawabanPG = JSON.parse(localStorage.getItem('jawabanBenarPG'));
-  const jawabanIsian = JSON.parse(localStorage.getItem('jawabanBenarIsian'));
-  const userJawabanPG = JSON.parse(localStorage.getItem('jawabanUserPG'));
-  const userJawabanIsian = JSON.parse(localStorage.getItem('jawabanUserIsian'));
+document.addEventListener("DOMContentLoaded", () => {
+  renderHasil();
+});
+
+function renderHasil() {
+  const hasilContainer = document.getElementById("hasil");
+  const nama = localStorage.getItem("nama") || "Siswa";
+  const kelas = localStorage.getItem("kelas") || "4";
+  const mapel = localStorage.getItem("mapel") || "ASWAJA Kelas 4";
+  const jawaban = JSON.parse(localStorage.getItem("jawaban") || "[]");
+  const kunci = JSON.parse(localStorage.getItem("kunci") || "[]");
 
   let benar = 0;
-  let total = jawabanPG.length + jawabanIsian.length;
+  let output = `
+    <h2>Rekapan Hasil Ujian</h2>
+    <p><strong>Nama:</strong> ${nama}<br>
+    <strong>Kelas:</strong> ${kelas}<br>
+    <strong>Mata Pelajaran:</strong> ${mapel}</p>
+    <ol>
+  `;
 
-  let html = `<h2>Hasil Ujian</h2>`;
-  html += `<p><strong>Nama:</strong> ${nama} | <strong>Kelas:</strong> ${kelas} | <strong>Mapel:</strong> ${mapel}</p>`;
-  html += "<hr><h3>Jawaban Pilihan Ganda</h3>";
-
-  jawabanPG.forEach((jawaban, i) => {
-    const user = userJawabanPG[i] || "-";
-    const isBenar = user === jawaban;
-    if (isBenar) benar++;
-    html += `<p>${i + 1}. Jawaban Anda: <b style="color:${isBenar ? 'green' : 'red'}">${user}</b>`;
-    if (!isBenar) {
-      html += ` | Jawaban Benar: <b style="color:green">${jawaban}</b>`;
-    }
-    html += "</p>";
+  jawaban.forEach((j, i) => {
+    const betul = j === kunci[i];
+    if (betul) benar++;
+    output += `
+      <li>
+        Jawaban Anda: <strong>${j || '-'}</strong> ${betul ? "✅" : `❌<br>Jawaban Benar: <strong>${kunci[i]}</strong>`}
+      </li>
+    `;
   });
 
-  html += "<h3>Jawaban Isian</h3>";
-  jawabanIsian.forEach((jawaban, i) => {
-    const user = userJawabanIsian[i] || "-";
-    const isBenar = user.toLowerCase().trim() === jawaban.toLowerCase().trim();
-    if (isBenar) benar++;
-    html += `<p>${i + 1}. Jawaban Anda: <b style="color:${isBenar ? 'green' : 'red'}">${user}</b>`;
-    if (!isBenar) {
-      html += ` | Jawaban Benar: <b style="color:green">${jawaban}</b>`;
-    }
-    html += "</p>";
-  });
+  output += "</ol>";
 
-  const skor = Math.round((benar / total) * 100);
-  let predikat = "D", lulus = "Remidi";
-  if (skor >= 86) { predikat = "A"; lulus = "Lulus"; }
-  else if (skor >= 76) { predikat = "B"; lulus = "Lulus"; }
-  else if (skor >= 61) { predikat = "C"; lulus = "Lulus"; }
+  const skor = Math.round((benar / kunci.length) * 100);
+  let predikat = "D", status = "Remidi";
+  if (skor >= 85) predikat = "A", status = "Lulus";
+  else if (skor >= 70) predikat = "B", status = "Lulus";
+  else if (skor >= 60) predikat = "C";
 
-  html += "<hr>";
-  html += `<h3>Nilai Akhir: ${skor}</h3>`;
-  html += `<p>Predikat: <strong>${predikat}</strong></p>`;
-  html += `<p>Kesimpulan: <strong>${lulus}</strong></p>`;
+  output += `
+    <div class="rekap">
+      <p><strong>Skor:</strong> ${skor}</p>
+      <p><strong>Predikat:</strong> ${predikat}</p>
+      <p><strong>Status:</strong> ${status}</p>
+    </div>
+  `;
 
-  document.getElementById('hasil').innerHTML = html;
+  hasilContainer.innerHTML = output;
 }
 
 function cetakPDF() {
-  const element = document.getElementById('hasil');
-  const opt = {
-    margin: 0.5,
-    filename: 'hasil_ujian.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  };
-  html2pdf().from(element).set(opt).save();
+  const hasil = document.getElementById("hasil");
+  setTimeout(() => {
+    html2pdf().set({
+      margin: 10,
+      filename: 'hasil-ujian.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).from(hasil).save();
+  }, 500); // jeda agar isi benar-benar render sebelum cetak
 }
-
-window.onload = tampilkanHasil;
